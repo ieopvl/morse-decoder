@@ -37,8 +37,24 @@ const MORSE_TABLE = {
     '-----':  '0',
 };
 
+
+
+// 00 10 10 10 10 0000000010 0010111010 0010111010 0000111111 -> hello
+//    .   .  .  .
+
 function decode(expr) {
-    // write your solution here
+  return expr.split('**********').map( word => {
+      let morseWord = '';
+      for(let i = 0; i < word.length; i += 2) {
+          if( word[i] + word[i + 1] === '10') morseWord += '.';
+          if( word[i] + word[i + 1] === '11') morseWord += '-';
+          if( ((i + 2) % 10) == 0) morseWord += ' ';
+      }
+      morseWord = morseWord.split(' ').map( v => {
+       return MORSE_TABLE[v];
+     }).join('');
+      return morseWord;
+  }).join(' ');
 }
 
 module.exports = {
